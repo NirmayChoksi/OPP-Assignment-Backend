@@ -59,6 +59,6 @@ public class UserService {
         user.setOtp(null);
         userRepository.save(user);
 
-        return jwtService.generateToken(contactNumber);
+        return jwtService.generateToken(user.getId(), contactNumber);
     }
 }
