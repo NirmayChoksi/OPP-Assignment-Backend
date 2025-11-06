@@ -16,7 +16,9 @@ public class SecurityConfig {
                         throws Exception {
                 http.csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(
-                                                auth -> auth.requestMatchers("/auth/create", "/auth/verify-otp")
+                                                auth -> auth.requestMatchers(
+                                                                "/auth/request-otp", "/auth/verify-otp",
+                                                                "/auth/resend-otp")
                                                                 .permitAll().anyRequest().authenticated())
                                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

@@ -1,9 +1,10 @@
 package com.oopAssignment.financeTracker.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
+@Data
 public class CreatePartyRequest {
-
     @NotBlank(message = "Name is required")
     private String name;
 
@@ -13,18 +14,5 @@ public class CreatePartyRequest {
     @NotBlank(message = "Type is required (CUSTOMER or SUPPLIER)")
     private String type;
 
-    private String gstNumber; // optional
-
-    // Getters and Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getContactNumber() { return contactNumber; }
-    public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
-    public String getGstNumber() { return gstNumber; }
-    public void setGstNumber(String gstNumber) { this.gstNumber = gstNumber; }
+    private String gstNumber;
 }

@@ -1,13 +1,17 @@
 package com.oopAssignment.financeTracker.dto.response;
 
 import com.oopAssignment.financeTracker.model.Party;
+import com.oopAssignment.financeTracker.model.PartyType;
 
+import lombok.Data;
+
+@Data
 public class PartyResponse {
 
     private String id;
     private String name;
     private String contactNumber;
-    private String type;
+    private PartyType type;
     private String gstNumber;
 
     public PartyResponse(Party party) {
@@ -17,11 +21,4 @@ public class PartyResponse {
         this.type = party.getType();
         this.gstNumber = party.getGstNumber();
     }
-
-    // Getters
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getContactNumber() { return contactNumber; }
-    public String getType() { return type; }
-    public String getGstNumber() { return gstNumber; }
 }
