@@ -41,7 +41,7 @@ public class PartyService {
                 request.getContactNumber(),
                 userId,
                 partyType,
-                request.getGstNumber());
+                null, null, request.getGstNumber());
 
         Party saved = partyRepository.save(party);
         return new PartyResponse(saved);

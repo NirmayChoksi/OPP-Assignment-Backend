@@ -1,5 +1,7 @@
 package com.oopAssignment.financeTracker.model;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -34,6 +36,8 @@ public class Party {
     private String userId; // owner of this party
 
     private PartyType type; // ✅ Switched to Enum
+    private BigDecimal YOU_GOT;
+    private BigDecimal YOU_GAVE;
 
     private String gstNumber; // optional for supplier
 }
