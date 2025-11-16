@@ -61,23 +61,6 @@ public class PartyController {
         return ResponseEntity.ok(response);
     }
 
-    // @GetMapping("/type/{type}")
-    // public ResponseEntity<ApiResponse<List<PartyResponse>>> getPartiesByType(
-    // @PathVariable String type,
-    // Authentication authentication) {
-
-    // String userId = authentication.getPrincipal().toString();
-
-    // List<PartyResponse> data = partyService.getPartiesByType(userId, type);
-
-    // ApiResponse<List<PartyResponse>> response = new ApiResponse<>(
-    // true,
-    // "Parties filtered by type retrieved successfully",
-    // data);
-
-    // return ResponseEntity.ok(response);
-    // }
-
     @GetMapping("/type/{type}")
     public ResponseEntity<ApiResponse<PartyListSummaryResponse>> getPartiesByType(
             @PathVariable PartyType type,

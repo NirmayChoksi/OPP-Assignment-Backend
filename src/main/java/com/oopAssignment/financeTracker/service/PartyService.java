@@ -54,22 +54,62 @@ public class PartyService {
                 .collect(Collectors.toList());
     }
 
-    // public List<PartyResponse> getPartiesByType(String userId, String type) {
+    // public PartyListSummaryResponse getPartiesByType(String userId, PartyType
+    // type) {
 
-    // PartyType partyType = parsePartyType(type);
+    // List<Party> parties = partyRepository.findByUserIdAndType(userId, type);
 
-    // return partyRepository.findByUserIdAndType(userId, partyType)
-    // .stream()
-    // .map(PartyResponse::new)
-    // .collect(Collectors.toList());
+    // BigDecimal totalYouGave = BigDecimal.ZERO;
+    // BigDecimal totalYouGot = BigDecimal.ZERO;
+
+    // List<PartyWithBalanceResponse> responseList = new ArrayList<>();
+
+    // for (Party party : parties) {
+
+    // List<Transaction> txList =
+    // transactionRepository.findByPartyId(party.getId());
+
+    // BigDecimal youGave = txList.stream()
+    // .filter(tx -> tx.getType() == TransactionType.YOU_GAVE)
+    // .map(Transaction::getAmount)
+    // .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    // BigDecimal youGot = txList.stream()
+    // .filter(tx -> tx.getType() == TransactionType.YOU_GOT)
+    // .map(Transaction::getAmount)
+    // .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    // BigDecimal balance = youGave.subtract(youGot);
+
+    // // ✅ Accumulate totals
+    // totalYouGave = totalYouGave.add(youGave);
+    // totalYouGot = totalYouGot.add(youGot);
+
+    // responseList.add(
+    // new PartyWithBalanceResponse(
+    // party.getId(),
+    // party.getName(),
+    // party.getContactNumber(),
+    // youGave,
+    // youGot,
+    // balance));
+    // }
+
+    // BigDecimal netBalance = totalYouGave.subtract(totalYouGot);
+
+    // return new PartyListSummaryResponse(
+    // totalYouGave,
+    // totalYouGot,
+    // netBalance,
+    // responseList);
     // }
 
     public PartyListSummaryResponse getPartiesByType(String userId, PartyType type) {
 
         List<Party> parties = partyRepository.findByUserIdAndType(userId, type);
 
-        BigDecimal totalYouGave = BigDecimal.ZERO;
-        BigDecimal totalYouGot = BigDecimal.ZERO;
+        BigDecimal totalYouGave = BigDecimal.ZERO; // what YOU WILL GIVE
+        BigDecimal totalYouGot = BigDecimal.ZERO; // what YOU WILL GET
 
         List<PartyWithBalanceResponse> responseList = new ArrayList<>();
 
@@ -89,9 +129,16 @@ public class PartyService {
 
             BigDecimal balance = youGave.subtract(youGot);
 
-            // ✅ Accumulate totals
-            totalYouGave = totalYouGave.add(youGave);
-            totalYouGot = totalYouGot.add(youGot);
+            // -------------------------------------------
+            // FINAL SETTLEMENT TOTALS
+            // (+balance) → they owe you → you will get
+            // (-balance) → you owe them → you will give
+            // -------------------------------------------
+            if (balance.compareTo(BigDecimal.ZERO) > 0) {
+                totalYouGot = totalYouGot.add(balance);
+            } else if (balance.compareTo(BigDecimal.ZERO) < 0) {
+                totalYouGave = totalYouGave.add(balance.abs());
+            }
 
             responseList.add(
                     new PartyWithBalanceResponse(
@@ -103,7 +150,7 @@ public class PartyService {
                             balance));
         }
 
-        BigDecimal netBalance = totalYouGave.subtract(totalYouGot);
+        BigDecimal netBalance = totalYouGot.subtract(totalYouGave);
 
         return new PartyListSummaryResponse(
                 totalYouGave,
