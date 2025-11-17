@@ -15,11 +15,14 @@ public class Bill {
     @Id
     private String id;
 
-    private String userId;          // ✅ Needed for setUserId(userId)
+    private String userId;
+
     private BillType type;
+
     private String partyId;
 
     private BigDecimal amount;
+
     private String note;
 
     private List<BillItem> items;

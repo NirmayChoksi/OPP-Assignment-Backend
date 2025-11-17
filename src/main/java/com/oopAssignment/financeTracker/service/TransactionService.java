@@ -1,6 +1,5 @@
 package com.oopAssignment.financeTracker.service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -37,16 +36,11 @@ public class TransactionService {
 
         TransactionType type = parseTransactionType(request.getType());
 
-        LocalDate date = request.getDate() != null
-                ? request.getDate()
-                : LocalDate.now();
-
         Transaction tx = new Transaction();
         tx.setPartyId(request.getPartyId());
         tx.setUserId(userId);
         tx.setType(type);
         tx.setAmount(request.getAmount());
-        tx.setDate(date);
         tx.setNote(request.getNote());
 
         Transaction saved = transactionRepository.save(tx);
@@ -57,8 +51,7 @@ public class TransactionService {
     public List<TransactionResponse> getTransactionsByParty(String userId, String partyId) {
 
         Party party = partyRepository.findById(partyId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Party not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Party not found"));
 
         if (!party.getUserId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,
@@ -75,9 +68,7 @@ public class TransactionService {
         try {
             return TransactionType.valueOf(type.trim().toUpperCase());
         } catch (Exception ex) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Type must be YOU_GAVE or YOU_GOT");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Type must be YOU_GAVE or YOU_GOT");
         }
     }
 }

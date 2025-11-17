@@ -2,7 +2,6 @@ package com.oopAssignment.financeTracker.model;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDate;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -39,9 +38,6 @@ public class Transaction {
     @NotNull(message = "Amount is required")
     @Min(value = 1, message = "Amount must be greater than zero")
     private BigDecimal amount;
-
-    @NotNull(message = "Date is required")
-    private LocalDate date = LocalDate.now();
 
     private String note;
 

@@ -1,6 +1,7 @@
 package com.oopAssignment.financeTracker.dto.response;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,4 +17,6 @@ public class PartyWithBalanceResponse {
     private BigDecimal youGave;
     private BigDecimal youGot;
     private BigDecimal balance;
+    private Instant lastTransactionAt;
+
 }

@@ -1,7 +1,6 @@
 package com.oopAssignment.financeTracker.dto.response;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import com.oopAssignment.financeTracker.model.Transaction;
 import com.oopAssignment.financeTracker.model.TransactionType;
@@ -21,8 +20,6 @@ public class TransactionResponse {
 
     private BigDecimal amount;
 
-    private LocalDate date;
-
     private String note;
 
     public TransactionResponse(Transaction tx) {
@@ -31,7 +28,6 @@ public class TransactionResponse {
         this.userId = tx.getUserId();
         this.type = tx.getType();
         this.amount = tx.getAmount();
-        this.date = tx.getDate();
         this.note = tx.getNote();
     }
 }

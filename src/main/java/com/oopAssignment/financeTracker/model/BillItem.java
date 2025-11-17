@@ -11,7 +11,7 @@ public class BillItem {
 
     private int quantity;
 
-    private BigDecimal price;         // auto-filled from Product
+    private BigDecimal price;
 
-    private BigDecimal totalAmount;   // price * quantity
+    private BigDecimal totalAmount;
 }

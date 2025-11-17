@@ -1,20 +1,13 @@
 package com.oopAssignment.financeTracker.controller;
 
-
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.oopAssignment.financeTracker.dto.request.ProductRequest;
+import com.oopAssignment.financeTracker.dto.response.ApiResponse;
 import com.oopAssignment.financeTracker.dto.response.ProductResponse;
 import com.oopAssignment.financeTracker.service.ProductService;
 
@@ -29,37 +22,65 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> addProduct(
+    public ResponseEntity<ApiResponse<ProductResponse>> addProduct(
             @RequestBody ProductRequest request,
             Authentication auth) {
 
         String userId = (String) auth.getPrincipal();
-        return ResponseEntity.ok(productService.addProduct(userId, request));
+        ProductResponse data = productService.addProduct(userId, request);
+
+        ApiResponse<ProductResponse> response = new ApiResponse<>(
+                true,
+                "Product added successfully",
+                data);
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(
+    public ResponseEntity<ApiResponse<ProductResponse>> updateProduct(
             @PathVariable String id,
             @RequestBody ProductRequest request,
             Authentication auth) {
 
         String userId = (String) auth.getPrincipal();
-        return ResponseEntity.ok(productService.updateProduct(userId, id, request));
+        ProductResponse data = productService.updateProduct(userId, id, request);
+
+        ApiResponse<ProductResponse> response = new ApiResponse<>(
+                true,
+                "Product updated successfully",
+                data);
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(
+    public ResponseEntity<ApiResponse<String>> deleteProduct(
             @PathVariable String id,
             Authentication auth) {
 
         String userId = (String) auth.getPrincipal();
         productService.deleteProduct(userId, id);
-        return ResponseEntity.ok("Product deleted");
+
+        ApiResponse<String> response = new ApiResponse<>(
+                true,
+                "Product deleted successfully",
+                "Deleted");
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> getProducts(Authentication auth) {
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> getProducts(Authentication auth) {
         String userId = (String) auth.getPrincipal();
-        return ResponseEntity.ok(productService.getAllProducts(userId));
+
+        List<ProductResponse> data = productService.getAllProducts(userId);
+
+        ApiResponse<List<ProductResponse>> response = new ApiResponse<>(
+                true,
+                "Products retrieved successfully",
+                data);
+
+        return ResponseEntity.ok(response);
     }
 }

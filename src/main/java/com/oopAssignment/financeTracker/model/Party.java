@@ -1,8 +1,11 @@
 package com.oopAssignment.financeTracker.model;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -33,11 +36,19 @@ public class Party {
     private String contactNumber;
 
     @NotBlank(message = "User ID is required")
-    private String userId; // owner of this party
+    private String userId;
 
-    private PartyType type; // ✅ Switched to Enum
+    private PartyType type;
+
     private BigDecimal YOU_GOT;
+
     private BigDecimal YOU_GAVE;
 
-    private String gstNumber; // optional for supplier
+    private String gstNumber;
+
+    @CreatedDate
+    private Instant createdAt;
+
+    @LastModifiedDate
+    private Instant updatedAt;
 }

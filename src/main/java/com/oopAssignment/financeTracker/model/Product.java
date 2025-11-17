@@ -11,10 +11,6 @@ import lombok.Data;
 @Document(collection = "products")
 public class Product {
 
-    public static Object builder() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     @Id
     private String id;
 
@@ -24,5 +20,5 @@ public class Product {
 
     private int quantity;
 
-    private String userId;   // ✅ link product to user
+    private String userId;
 }

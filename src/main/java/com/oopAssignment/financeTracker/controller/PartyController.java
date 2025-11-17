@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oopAssignment.financeTracker.dto.request.CreatePartyRequest;
 import com.oopAssignment.financeTracker.dto.response.ApiResponse;
+import com.oopAssignment.financeTracker.dto.response.PartyDetailResponse;
 import com.oopAssignment.financeTracker.dto.response.PartyListSummaryResponse;
 import com.oopAssignment.financeTracker.dto.response.PartyResponse;
 import com.oopAssignment.financeTracker.model.PartyType;
@@ -73,6 +74,23 @@ public class PartyController {
         ApiResponse<PartyListSummaryResponse> response = new ApiResponse<>(
                 true,
                 "Parties fetched successfully",
+                data);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{partyId}")
+    public ResponseEntity<ApiResponse<PartyDetailResponse>> getPartyById(
+            @PathVariable String partyId,
+            Authentication authentication) {
+
+        String userId = authentication.getPrincipal().toString();
+
+        PartyDetailResponse data = partyService.getPartyWithTransactions(userId, partyId);
+
+        ApiResponse<PartyDetailResponse> response = new ApiResponse<>(
+                true,
+                "Party details retrieved successfully",
                 data);
 
         return ResponseEntity.ok(response);

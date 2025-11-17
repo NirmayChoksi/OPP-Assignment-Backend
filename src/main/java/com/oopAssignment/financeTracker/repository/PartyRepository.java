@@ -11,4 +11,6 @@ public interface PartyRepository extends MongoRepository<Party, String> {
     List<Party> findByUserId(String userId);
 
     List<Party> findByUserIdAndType(String userId, PartyType type);
+
+    boolean existsByUserIdAndContactNumber(String userId, String contactNumber);
 }
