@@ -71,4 +71,9 @@ public class TransactionService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Type must be YOU_GAVE or YOU_GOT");
         }
     }
+
+    public List<Transaction> getTransactionsByUser(String userId) {
+        return transactionRepository.findByUserId(userId);
+    }
+
 }

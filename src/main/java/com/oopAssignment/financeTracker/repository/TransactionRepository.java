@@ -8,4 +8,7 @@ import com.oopAssignment.financeTracker.model.Transaction;
 
 public interface TransactionRepository extends MongoRepository<Transaction, String> {
     List<Transaction> findByPartyId(String partyId);
+
+    List<Transaction> findByUserId(String userId);
+
 }

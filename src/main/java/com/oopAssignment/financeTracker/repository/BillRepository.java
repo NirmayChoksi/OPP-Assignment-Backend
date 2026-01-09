@@ -12,4 +12,5 @@ public interface BillRepository extends MongoRepository<Bill, String> {
     List<Bill> findByUserId(String userId);
 
     List<Bill> findByUserIdAndType(String userId, BillType type);
+
 }
